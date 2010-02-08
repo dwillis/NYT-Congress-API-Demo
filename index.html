@@ -1,5 +1,66 @@
 <html>
+<style>
+BODY { 
+        color: #142A3B;
+        background: #aaa;
+        font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-align: center;
+	align: center;
+ 
+}
+a:link {
+  color: #111;
+}
+ 
+a:visited {
+  color: #111;
+}
+ 
+input {
+        font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+        border-top: 1px solid #666;
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+        border-left: 1px solid #666;
+        padding: 4px;
+        margin: 4px;
+        background-color: #eef;
+	font-size: 16pt;
+}
+ 
+div {
+        -moz-border-radius: 10px;
+        background-color: #fafafa;
+        border: 2px solid #EEEAE4;
+        margin: 0px 0px 8px 2%%;
+        padding: 0px;
+        float: left;
+}
+ 
+#container { 
+	width: 940px;
+}
+ 
+img {
+        -moz-border-radius: 10px;
+        background-color: #fafafa;
+        border: 2px solid #EEEAE4;
+        margin: 0px 0px 8px 2%%;
+        padding: 0px;
+}
+ 
+#graph {  
+	float: left;
+	width: 630px;
+}
+#img { 
+	width: 120px;
+        border: 2px solid #aaaaaa;
+}
+ 
+</style>
   <body>
+	<div id="container">
 	{% if member %}
 	
 	<h3>Recent Health Care Floor Speeches by {{ member.full_name }}</h3>
@@ -13,5 +74,7 @@
 	<h3>Oops! We didn't recognize that member. Please try again.</h3>
 
 	{% endif %}
+	</div>
+	<div id="container">brought to you via the Congress API of <a href="http://developer.nytimes.com">nytimes.com</a> and <a href="http://twitter.com/derekwillis">derekwillis</a></div>
   </body>
 </html>
