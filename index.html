@@ -1,0 +1,17 @@
+<html>
+  <body>
+	{% if member %}
+	
+	<h3>Recent Health Care Floor Speeches by {{ member.full_name }}</h3>
+	
+    {% for appearance in appearances %}
+       <p><a href="{{ appearance.url }}">{{ appearance.title }}</a> : {{ appearance.real_date|date:"F d, Y" }}</p>
+    {% endfor %}
+
+  	{% else %}
+
+	<h3>Oops! We didn't recognize that member. Please try again.</h3>
+
+	{% endif %}
+  </body>
+</html>
