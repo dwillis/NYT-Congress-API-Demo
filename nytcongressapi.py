@@ -134,9 +134,11 @@ class nytcongress(object):
     def _apicall(path, params):
         # fix to allow for keyword args
         if params:
-            url = "http://politics.nytimes.com/congress/svc/politics/v3/us/legislative/congress/%s.json&%s" % (path, urllib.urlencode(params))
+            url = "http://api.nytimes.com/svc/politics/v2/us/legislative/congress/%s.json?api-key=%s&%s" % (path, nytcongress.api_key, urllib.urlencode(params))
         else:
-            url = "http://politics.nytimes.com/congress/svc/politics/v3/us/legislative/congress/%s.json" % (path)
+            url = "http://api.nytimes.com/svc/politics/v2/us/legislative/congress/%s.json?api-key=%s" % (path, nytcongress.api_key)
+        if nytcongress.api_key is None:
+            raise NYTCongressApiError('You did not supply an API key')        
         try:
             response = urllib2.urlopen(url).read()
             return json.loads(response)['results']

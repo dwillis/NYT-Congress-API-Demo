@@ -22,6 +22,7 @@ from django.utils import simplejson as json
 import os
 from google.appengine.ext.webapp import template
 from nytcongressapi import nytcongress, NYTCongressApiError
+nytcongress.api_key = 'YOUR-API-KEY'
 
 class MainHandler(webapp.RequestHandler):
 
