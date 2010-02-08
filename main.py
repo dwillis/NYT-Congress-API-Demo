@@ -36,6 +36,7 @@ class MainHandler(webapp.RequestHandler):
         except:
             member = None
             appearances = None
+            hcr = None
             
         template_values = {
                     'appearances': hcr,
