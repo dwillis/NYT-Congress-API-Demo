@@ -61,9 +61,14 @@ img {
 </style>
   <body>
 	<div id="container">
+
 	{% if member %}
 	
-	<h3>Recent Health Care Floor Speeches by {{ member.full_name }}</h3>
+	<h3>Recent Health Care Senate Speeches by <a href="http://www.govtrack.us/congress/person.xpd?id={{ member.govtrack_id }}">Sen. {{ member.full_name }}</a></h3>
+	
+	</div>
+
+	<div id="container">
 	
     {% for appearance in appearances %}
        <p><a href="{{ appearance.url }}">{{ appearance.title }}</a> : {{ appearance.real_date|date:"F d, Y" }}</p>
