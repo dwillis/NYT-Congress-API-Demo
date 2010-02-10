@@ -75,6 +75,10 @@ class Floor(NYTCongressApiObject):
 class Bill(NYTCongressApiObject):
     def __repr__(self):
         return '<%s: %s>' % (self.__class__.__name__, unicode(self.number))
+        
+    def nyt_url(self):
+        slug = self.number.lower().replace('.','')
+        return "http://politics.nytimes.com/congress/bills/111/%s" % slug
 
 class Committee(NYTCongressApiObject):
     def __init__(self, d):
@@ -123,7 +127,6 @@ class Comparison(NYTCongressApiObject):
         else:
             return '<%s: %s%% agreement' % (self.__class__.__name__, self.agree_percent)
 
-
 # namespaces #
  
 class nytcongress(object):
@@ -134,9 +137,9 @@ class nytcongress(object):
     def _apicall(path, params):
         # fix to allow for keyword args
         if params:
-            url = "http://api.nytimes.com/svc/politics/v2/us/legislative/congress/%s.json?api-key=%s&%s" % (path, nytcongress.api_key, urllib.urlencode(params))
+            url = "http://api.nytimes.com/svc/politics/v3/us/legislative/congress/%s.json?api-key=%s&%s" % (path, nytcongress.api_key, urllib.urlencode(params))
         else:
-            url = "http://api.nytimes.com/svc/politics/v2/us/legislative/congress/%s.json?api-key=%s" % (path, nytcongress.api_key)
+            url = "http://api.nytimes.com/svc/politics/v3/us/legislative/congress/%s.json?api-key=%s" % (path, nytcongress.api_key)
         if nytcongress.api_key is None:
             raise NYTCongressApiError('You did not supply an API key')        
         try:
@@ -232,4 +235,9 @@ class nytcongress(object):
             results = nytcongress._apicall(path, None)[0]
             return [Bill(b) for b in results['bills']]
         
+        @staticmethod
+        def sponsor_compare(first_member, second_member, congress, chamber):
+            path = "members/%s/sponsor_compare/%s/%s/%s" % (first_member, second_member, congress, chamber)
+            results = nytcongress._apicall(path, None)[0]
+            return [Bill(b) for b in results['bills']]
         

@@ -22,39 +22,23 @@ from django.utils import simplejson as json
 import os
 from google.appengine.ext.webapp import template
 from nytcongressapi import nytcongress, NYTCongressApiError
-nytcongress.api_key = 'YOUR-API-KEY-HERE'
+nytcongress.api_key = 'NYT-API-KEY'
 
 class MainHandler(webapp.RequestHandler):
-
-  def get(self, member):
-    if member:
-        member_id = member
-        try:
-            member = nytcongress.members.get(member_id)
-            appearances = nytcongress.members.floor(id=member_id)
-            hcr = [a for a in appearances if "Service" in a.title or "Health Care Reform" in a.title]
-        except:
-            member = None
-            appearances = None
-            hcr = None
-            
-        template_values = {
-                    'appearances': hcr,
-                    'member': member,
-                    }
-    else:
-        members = nytcongress.members.filter(congress=111, chamber='senate')
-        template_values = {
-                    'members': members
-                    }
-    path = os.path.join(os.path.dirname(__file__), 'index.html')
-    self.response.out.write(template.render(path, template_values))
+    def get(self):
+        first_member = nytcongress.members.get("B001261")
+        second_member = nytcongress.members.get("F000457")
+        comparison = nytcongress.members.compare("B001261", "F000457", 111, 'senate')
+        sponsor_comparison = nytcongress.bills.sponsor_compare("B001261", "F000457", 111, 'senate')
+        template_values = { 'first_member' : first_member, 'second_member': second_member, 'comparison': comparison, 'sponsor_comparison': sponsor_comparison, 'bills':len(sponsor_comparison)}
+        path = os.path.join(os.path.dirname(__file__), 'index.html')
+        self.response.out.write(template.render(path, template_values))
 
 def main():
-  application = webapp.WSGIApplication([('/(.*)', MainHandler)],
+    application = webapp.WSGIApplication([('/', MainHandler)],
                                        debug=True)
-  util.run_wsgi_app(application)
+    util.run_wsgi_app(application)
 
 
 if __name__ == '__main__':
-  main()
+    main()

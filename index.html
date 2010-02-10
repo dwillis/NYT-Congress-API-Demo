@@ -1,24 +1,27 @@
 <html>
+  <title>NYT Congress API Sample App</title>
   <link href="/media/blueprint/screen.css" media="screen, projection", rel="stylesheet", type="text/css">
   <body>
 	<div class="container">
-	  <div class="span-16">
-
-		{% if member %}
-	
-		<h3>Recent Health Care Senate Speeches by <a href="http://www.govtrack.us/congress/person.xpd?id={{ member.govtrack_id }}">Sen. {{ member.full_name }}</a> ({{ member.party }}-{{ member.state }})</h3>
-	 	<hr>
-	
-	    {% for appearance in appearances %}
-	       <p>{{ appearance.real_date|date:"F d, Y" }}: <a href="{{ appearance.url }}">{{ appearance.title }}</a></p>
-	    {% endfor %}
-
-	  	{% else %}
-
-		<h3>Oops! We didn't recognize that member. Please try again.</h3>
-
-		{% endif %}
-		</div>
-		<div class="span-16">brought to you via the Congress API of <a href="http://developer.nytimes.com">nytimes.com</a> and <a href="http://twitter.com/derekwillis">derekwillis</a></div>
+		<hr>
+		<h1>Strange Bedfellows</h1>
+		<h3>(it's what politics makes for ...)</h3>
+	  <div class="span-12">
+		<h2><a href="http://www.govtrack.us/congress/person.xpd?id={{ first_member.govtrack_id }}">{{ first_member.full_name }} ({{ first_member.party }}-{{ first_member.state }})</a>
+		<strong>&</strong>
+		<a href="http://www.govtrack.us/congress/person.xpd?id={{ second_member.govtrack_id }}">{{ second_member.full_name }} ({{ second_member.party }}-{{ second_member.state }})</a></h2>
+		
+		<h1>In the 111th Congress, these two senators have voted together on {{ comparison.agree_percent }} percent of {{ comparison.common_votes }} roll-call votes.</h1>
+		
+		<hr>
+		<h1>Sens. {{ first_member.last_name }} and {{ second_member.last_name }} have cosponsored {{ bills }} bills:</h1>
+		<ul>
+		{% for bill in sponsor_comparison %}
+		<li><a href="{{ bill.nyt_url }}">{{ bill.number }}</a>: {{ bill.title }}</li>
+		{% endfor %}
+		</ul>
+		<br />
+		<div class="span-20">brought to you via the Congress API of <a href="http://developer.nytimes.com">nytimes.com</a> and <a href="http://twitter.com/derekwillis">derekwillis</a></div>
+	</div>
   </body>
 </html>
