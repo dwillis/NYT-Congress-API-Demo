@@ -8,8 +8,8 @@ Pre-requisites: simplejson (except if using Python > 2.6)
 """
  
 __author__ = "Derek Willis (dwillis@gmail.com)"
-__version__ = "0.2.0"
-__copyright__ = "Copyright (c) 2009 Derek Willis"
+__version__ = "0.3.0"
+__copyright__ = "Copyright (c) 2010 Derek Willis"
 __license__ = "MIT"
  
 import urllib, urllib2

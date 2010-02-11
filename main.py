@@ -18,18 +18,21 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 import urllib
+import random
 from django.utils import simplejson as json
 import os
 from google.appengine.ext.webapp import template
 from nytcongressapi import nytcongress, NYTCongressApiError
-nytcongress.api_key = 'NYT-API-KEY'
+nytcongress.api_key = 'YOUR-NYT-API-KEY'
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
-        first_member = nytcongress.members.get("B001261")
-        second_member = nytcongress.members.get("F000457")
-        comparison = nytcongress.members.compare("B001261", "F000457", 111, 'senate')
-        sponsor_comparison = nytcongress.bills.sponsor_compare("B001261", "F000457", 111, 'senate')
+        gop = ['B001261','C001071','K000352','S001141','V000127']
+        dems = ['F000457','I000025','L000123','T000464','S000033']
+        first_member = nytcongress.members.get(random.choice(gop))
+        second_member = nytcongress.members.get(random.choice(dems))
+        comparison = nytcongress.members.compare(first_member.member_id, second_member.member_id, 111, 'senate')
+        sponsor_comparison = nytcongress.bills.sponsor_compare(first_member.member_id, second_member.member_id, 111, 'senate')
         template_values = { 'first_member' : first_member, 'second_member': second_member, 'comparison': comparison, 'sponsor_comparison': sponsor_comparison, 'bills':len(sponsor_comparison)}
         path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.response.out.write(template.render(path, template_values))
