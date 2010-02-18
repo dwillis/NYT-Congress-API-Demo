@@ -7,6 +7,7 @@
 		<h1>Strange Bedfellows</h1>
 		<h3>(it's what politics makes for ... reload the page for another combo)</h3>
 	  <div class="span-16">
+		{% if first_member %}
 		<h2><a href="http://www.govtrack.us/congress/person.xpd?id={{ first_member.govtrack_id }}">{{ first_member.full_name }} ({{ first_member.party }}-{{ first_member.state }})</a>
 		<strong>&</strong>
 		<a href="http://www.govtrack.us/congress/person.xpd?id={{ second_member.govtrack_id }}">{{ second_member.full_name }} ({{ second_member.party }}-{{ second_member.state }})</a></h2>
@@ -20,6 +21,9 @@
 		<li><a href="{{ bill.nyt_url }}">{{ bill.number }}</a>: {{ bill.title }}</li>
 		{% endfor %}
 		</ul>
+		{% else %}
+		<h3>{{ error }}</h3>
+		{% endif %}
 		<br />
 		<div class="span-20">brought to you via the Congress API of <a href="http://developer.nytimes.com">nytimes.com</a> and <a href="http://twitter.com/derekwillis">derekwillis</a>. built atop <a href="http://code.google.com/appengine/">Google App Engine</a>.</div>
 	</div>

@@ -139,9 +139,9 @@ class nytcongress(object):
         if params:
             url = "http://api.nytimes.com/svc/politics/v3/us/legislative/congress/%s.json?api-key=%s&%s" % (path, nytcongress.api_key, urllib.urlencode(params))
         else:
-            url = "http://api.nytimes.com/svc/politics/v3/us/legislative/congress/%s.json?api-key=%s" % (path, nytcongress.api_key)
+            url = "http://api.nytimes.com/svc/politics/v3/us/legislative/congress/%s.json?api-key=%s" % (path, nytcongress.api_key)        
         if nytcongress.api_key is None:
-            raise NYTCongressApiError('You did not supply an API key')        
+            raise NYTCongressApiError('You did not supply an API key')
         try:
             response = urllib2.urlopen(url).read()
             return json.loads(response)['results']
@@ -191,7 +191,7 @@ class nytcongress(object):
 
         @staticmethod
         def compare(first, second, congress, chamber):
-            path = 'members/%s/compare/%s/%s/%s' % (first, second, congress, chamber)
+            path = 'members/%s/votes/%s/%s/%s' % (first, second, congress, chamber)
             results = nytcongress._apicall(path, None)[0]
             return Comparison(results)
     
@@ -237,7 +237,7 @@ class nytcongress(object):
         
         @staticmethod
         def sponsor_compare(first_member, second_member, congress, chamber):
-            path = "members/%s/sponsor_compare/%s/%s/%s" % (first_member, second_member, congress, chamber)
+            path = "members/%s/bills/%s/%s/%s" % (first_member, second_member, congress, chamber)
             results = nytcongress._apicall(path, None)[0]
             return [Bill(b) for b in results['bills']]
         
