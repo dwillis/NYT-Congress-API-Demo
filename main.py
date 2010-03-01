@@ -34,8 +34,8 @@ class MainHandler(webapp.RequestHandler):
             comparison = nytcongress.members.compare(first_member.member_id, second_member.member_id, 111, 'senate')
             sponsor_comparison = nytcongress.bills.sponsor_compare(first_member.member_id, second_member.member_id, 111, 'senate')
             template_values = { 'first_member' : first_member, 'second_member': second_member, 'comparison': comparison, 'sponsor_comparison': sponsor_comparison, 'bills':len(sponsor_comparison)}
-        except NYTCongressApiError:
-            error = "Looks like you didn't supply an API key."
+        except:
+            error = "Oops. Something went wrong."
             template_values = {'error': error}
         path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.response.out.write(template.render(path, template_values))
