@@ -26,13 +26,13 @@ from nytcongressapi import nytcongress, NYTCongressApiError
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        gop = ["A000360", "B001135", "B001236", "B001261", "C000286", "C000560", "C000567", "C000880", "C001035", "C001056", "C001071", "D000595", "E000194", "E000285", "G000359", "G000386", "H000338", "H001016", "I000024", "I000055", "K000352", "L000504", "M000303", "M000355", "M001153", "R000307", "S000320", "S000663", "S001141", "T000250", "V000127", "W000437", "R000584", "J000291", "B001268", "K000360", "R000595", "C000542", "M000934", "P000603", "B000575", "A000368", "H001061", "P000449", "T000461", "L000577", "J000293"]
-        dems = ["A000069", "B000243", "B000468", "B000711", "B000944", "C000127", "C000141", "C000174", "C000705", "C001070", "D000563", "F000062", "H000206", "J000177", "K000148", "K000305", "K000367", "L000123", "L000174", "L000261", "L000304", "L000550", "M000639", "M000702", "M001111", "M001170", "N000032", "N000180", "P000590", "R000122", "R000146", "R000361", "S000033", "S000148", "S000770", "T000464", "W000779", "W000802", "W000803", "I000025", "B001265", "U000038", "S001181", "U000039", "H001049", "M001176", "W000805", "B001267", "G000555", "C001088", "M001183", "B001277"]
+        gop = [u'A000360', u'A000368', u'B000575', u'B001135', u'B001236', u'B001261', u'C000542', u'C000567', u'C000880', u'C001035', u'C001047', u'C001056', u'C001071', u'C001075', u'C001095', u'C001098', u'D000618', u'E000285', u'E000295', u'F000444', u'F000463', u'G000359', u'G000386', u'G000562', u'H000338', u'H001041', u'H001061', u'I000024', u'I000055', u'J000293', u'K000360', u'L000575', u'L000577', u'M000303', u'M000355', u'M000934', u'M001153', u'P000449', u'P000603', u'P000612', u'R000307', u'R000584', u'R000595', u'R000605', u'S000320', u'S001141', u'S001184', u'S001197', u'S001198', u'T000250', u'T000461', u'T000476', u'V000127', u'W000437']
+        dems = [u'B000711', u'B000944', u'B001230', u'B001267', u'B001277', u'B001288', u'C000127', u'C000141', u'C000174', u'C001070', u'C001088', u'D000563', u'D000607', u'F000062', u'F000457', u'G000555', u'H001042', u'H001046', u'H001069', u'K000367', u'K000384', u'L000174', u'M000133', u'M000639', u'M000702', u'M001111', u'M001169', u'M001170', u'M001176', u'M001183', u'N000032', u'P000595', u'R000122', u'R000146', u'S000148', u'S000770', u'S001181', u'S001194', u'T000464', u'U000039', u'W000779', u'W000802', u'W000805', u'W000817', u'K000383', u'S000033']
         try:
             first_member = nytcongress.members.get(random.choice(gop))
             second_member = nytcongress.members.get(random.choice(dems))
-            comparison = nytcongress.members.compare(first_member.member_id, second_member.member_id, 112, 'senate')
-            sponsor_comparison = nytcongress.bills.sponsor_compare(first_member.member_id, second_member.member_id, 112, 'senate')
+            comparison = nytcongress.members.compare(first_member.member_id, second_member.member_id, 114, 'senate')
+            sponsor_comparison = nytcongress.bills.sponsor_compare(first_member.member_id, second_member.member_id, 114, 'senate')
             template_values = { 'first_member' : first_member, 'second_member': second_member, 'comparison': comparison, 'sponsor_comparison': sponsor_comparison, 'bills':len(sponsor_comparison)}
         except:
             error = "Oops. Something went wrong."
