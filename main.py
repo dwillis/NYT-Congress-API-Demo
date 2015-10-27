@@ -34,9 +34,9 @@ class MainHandler(webapp2.RequestHandler):
             comparison = nytcongress.members.compare(first_member.member_id, second_member.member_id, 114, 'senate')
             sponsor_comparison = nytcongress.bills.sponsor_compare(first_member.member_id, second_member.member_id, 114, 'senate')
             template_values = { 'first_member' : first_member, 'second_member': second_member, 'comparison': comparison, 'sponsor_comparison': sponsor_comparison, 'bills':len(sponsor_comparison)}
-        except:
-            error = "Oops. Something went wrong."
-            template_values = {'error': error}
+        except(e):
+            #error = "Oops. Something went wrong."
+            template_values = {'error': e}
         path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.response.out.write(template.render(path, template_values))
 
